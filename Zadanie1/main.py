@@ -1,20 +1,20 @@
-from ndicts.ndicts import NestedDict
+from ndicts.ndicts import NestedDict  # do czego to jest?
 
-def build(tab):
+def build(tab):  # czemu tab?
     automat = {}
     state = 0 #stan poczatkowy - inkrementowany wraz z tworzeniem nowych stanow
-    acc_states = [] #tablica [stany akceptujace,wzorce]
+    acc_states = [] #tablica [stany akceptujace,wzorce]  # lista
     trie_level = [] #tablica [poziom drzewa,stan]
 
     #Funkcja new_branch sprawdza czy z danego stanu (a_state) wychodzi juz galaz z dana literka ze wzorca.
     #Jesli nie to tworzymy nowa galaz i nowe stany (state)
     #Jesli istnieje galaz z dana literka to przechodzimy do nastepnego stanu i sprawdzamy go rekurencyjnie.
 
-    #l_index - indeks w tablicy liter
-    #a_state - sprawdzany stan
+    #l_index - indeks w tablicy liter  # to czemu nie letter_index? 5 literek Pani szkoda?
+    #a_state - sprawdzany stan  # analogicznie
     #state - numer nastepnego stanu
     #letters - tablica liter
-    #level - przypisanie poziomu drzewa danemu stanowi
+    #level - przypisanie poziomu drzewa danemu stanowi  # czy to jest potrzebne?
 
     def new_branch(l_index, a_state, state, letters, level):
         #przypadek 1: gdy podajemy 2 wzorce gdzie pierwszy jest przedluzeniem drugiego, np. 'hej' 'heja'
@@ -84,10 +84,8 @@ def build(tab):
         state = new_branch(0, 0, state, letters, level)
         acc_states.append([state, tab[i]])
 
-    acc_states_dict = {}  # lepiej z dict jednak, poprawie kiedy indziej :p
-    for i in range(len(acc_states)):
-        acc_states_dict[acc_states[i][0]] = acc_states[i][1]
-
+    acc_states_dict = dict(acc_states)
+        
     #FAILLINKI
 
     fail = []  # tablica z zagniezdzonymi tablicami [stan skad wychodzi faillink, stan docelowy faillinku]
@@ -98,7 +96,7 @@ def build(tab):
 
     nd = NestedDict(automat)
 
-    for i in range(1, state+1):
+    for i in range(1, state+1):  # to Pani nie gwarantuje przejścia wszerz
         if i in automat[0].values():
             fail.append([i, 0])
         elif trie_level.get(i) == 2: #dla 2 poziomu drzewa
@@ -162,12 +160,12 @@ def search(string, trie, fail, acc_states):
 
 if __name__ == '__main__':
     try:
-        sample = ["abc","aab","cba"]  # przykladowy wzorzec
-        automat, faillink, acc_states = build(sample)
+        sample = ["abcbc", "bc"]  # przykladowy wzorzec
+        automat, faillink, acc_states = build(sample)  # KeyError
         print("Drzewo: ", automat)
         print("Faillinki: ", faillink)
         print("Stany akceptujace: ", acc_states)
-        indexes = search("aaabc", automat, faillink, acc_states)
+        indexes = search("aaabcbcbc", automat, faillink, acc_states)  # dużo argumentów
         print("Wystapienia wzorcow: ", indexes)
     except TypeError:
         print("Sprawdz czy wprowadziles napisy w sample i search (pierwsza zmienna)!")
