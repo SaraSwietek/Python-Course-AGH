@@ -18,6 +18,8 @@ class Graph():
             if vertex in i:
                 i.remove(vertex)
 
+    # dodaj krawędź
+    # jeśli podany wierzchołek/wierzchołki nie istnieją to są dodawane!
     def add_edge(self, v_start, v_end):
         if v_start not in self.graph:
             self.graph[v_start] = {v_end}
