@@ -42,9 +42,9 @@ class Graph():
                 self.graph[v_start].remove(v_end)
 
     def get_neighbours(self, vertex):
-        return self.graph[vertex]
+        return set(self.graph[vertex])
 
-    def DFS(self, vertex, visited = [], stack = []):
+    def DFS(self, vertex, visited=[], stack=[]): # modyfikowalne obiekty jako wartości domyślne parametrów to bardzo zły pomysł
 
         if vertex not in visited:
             visited.append(vertex)
