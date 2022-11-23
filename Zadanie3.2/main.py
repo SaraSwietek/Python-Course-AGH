@@ -14,8 +14,10 @@ def word_generator(filename, filetype):
 
 # funkcja służąca do usuwania znaków interpunkcyjnych ze stringa
 def delete_characters(string):
-    #czy jest jakiś mądrzejszy sposób na pozbycie się x84?
-    characters = [",", ".", ":", ";", "!", "?", "-", "\x84", "\"", "(", ")"]
+    #czy jest jakiś mądrzejszy sposób na pozbycie się \x84?
+    #w iso-8859-2 problem z polskimi znakami, wiec zostawiam reczne usuwanie
+    #chociaż wiem że jest średnio legalne
+    characters = [",", ".", ":", ";", "!", "?", "\x84", "-", "\"", "(", ")"]
     string = string.lower()
     for i in range(len(characters)):
         if characters[i] in string:
@@ -73,5 +75,5 @@ def search_most_frequent(words_freq, n_most_frequent=None, dict_most_frequent={}
 
 
 #5 najczęściej występujących słów w pliku potop.txt
-print(search_most_frequent(count_words("potop.txt", "txt"), 5))
+print(search_most_frequent(count_words("potop.txt", "txt"),5))
 
