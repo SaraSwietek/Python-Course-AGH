@@ -42,7 +42,9 @@ def count_words(filename, filetype):
 #funkcja przyjmująca słownik z wystąpieniami słów w tekście (words_freq)
 #umożliwia wyświetlenie n najczęściej występujących słów (n_most_frequent)
 #z uwzględnieniem remisów
-def search_most_frequent(words_freq, n_most_frequent=None, dict_most_frequent={}):
+def search_most_frequent(words_freq, n_most_frequent=None, dict_most_frequent=None):
+    if dict_most_frequent is None:
+        dict_most_frequent = {}
 
     # jeśli n_most_frequent nie zostanie podane, to funkcja zwraca wszystkie wystąpienia
     if n_most_frequent==None:
