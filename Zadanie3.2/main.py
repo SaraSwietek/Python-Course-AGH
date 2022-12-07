@@ -3,18 +3,17 @@ import copy
 
 #funkcje do generowania słów
 def word_generator(filename, filetype):
-    if filetype == 'txt':
-        with open(filename, 'r', encoding='UTF-8') as file:
+    if filetype == 'txt':  # else?
+        with open(filename, 'r', encoding='UTF-8') as file:  # przesłonięcie symbolu wbudowanego
             for line in file:
-                words = line.split()  # dzielimy po białych znakach
-                for word in words:
+                for word in line.split():  # dzielimy po białych znakach
                     word = delete_characters(word) # usuwam znaki interpunkcyjne
                     yield word
 
 
 # funkcja służąca do usuwania znaków interpunkcyjnych ze stringa
-def delete_characters(string):
-    #czy jest jakiś mądrzejszy sposób na pozbycie się \x84?
+def delete_characters(string):  # niejasna nazwa
+    #czy jest jakiś mądrzejszy sposób na pozbycie się \x84? moduł re lub regex i usuwanie wszystkiego, co nie jest literą (unicode'ową)
     #w iso-8859-2 problem z polskimi znakami, wiec zostawiam reczne usuwanie
     #chociaż wiem że jest średnio legalne
     characters = [",", ".", ":", ";", "!", "?", "\x84", "-", "\"", "(", ")"]
@@ -27,7 +26,7 @@ def delete_characters(string):
 
 #fukcja zwracająca wystąpienia słów w tekście w postaci słownika {słowo:wystąpienia}
 def count_words(filename, filetype):
-    words_freq = {}
+    words_freq = {}  # polecam klasę collections.Counter
 
     for word in word_generator(filename, filetype):
         if word != "":  # zabezpieczenie przed pustym stringiem po usunieciu interpunkcji
@@ -72,8 +71,8 @@ def search_most_frequent(words_freq, n_most_frequent=None, dict_most_frequent=No
 
     n_most_frequent = n_most_frequent - 1
     if n_most_frequent>0:
-        return search_most_frequent(words_freq_copy, n_most_frequent, dict_most_frequent)
-    return dict_most_frequent
+        return search_most_frequent(words_freq_copy, n_most_frequent, dict_most_frequent)  # rekurencja to trochę overkill w tym przypadku
+    return dict_most_frequent  # źle działa, jeśli remis nie jest na końcu
 
 
 #5 najczęściej występujących słów w pliku potop.txt
