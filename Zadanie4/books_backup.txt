@@ -1,3 +1,0 @@
-1; Eric Matthes|"Python Instrukcje dla Programisty"|x|0|1
-2; Mark Lutz|"Python. Wprowadzenie."|1swieta1*01.01.2023|0|2
-3; Michael Sipser|"Wprowadzenie do teorii obliczeń"|1swieta1*01.01.2023|bibliotekarz1*1|3

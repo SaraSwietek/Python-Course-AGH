@@ -1,3 +1,5 @@
 proba; probaa|b
 1swieta1; mojehaslo|c
 bibliotekarz1; haslo|b
+bib; bib|b
+mem; mem|c
