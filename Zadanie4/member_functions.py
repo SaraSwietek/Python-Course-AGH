@@ -61,7 +61,7 @@ def extend_deadline(username):
         details = books_dict[isbn].split("|")
 
         if username not in details[2]:
-            print("Podana ksiazka nie jest zarezerwowana przez uzytkownika " + details[3] + ". Sprobuj ponownie!")
+            print("Podana ksiazka nie jest zarezerwowana przez uzytkownika " + username + ". Sprobuj ponownie!")
 
         elif username in details[2]:
             print("Ksiazka zostala pomyslnie przedluzona na przyszly miesiac! Termin zwrotu: ",next_month())

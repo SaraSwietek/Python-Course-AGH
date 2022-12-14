@@ -3,27 +3,31 @@ from common_functions import txt_to_dict, describe_books
 
 def return_book():
     isbn = input("Podaj isbn ksiazki ktora chcesz zwrocic: >> ")
-    books_dict = txt_to_dict("books.txt")
 
-    details = books_dict[isbn].split("|")
+    try:
+        books_dict = txt_to_dict("books.txt")
 
-    if isbn not in books_dict:
-        print("Ksiazka o isbn "+isbn+" nie istnieje!")
-    else:
-        print("Ksiazka zostala pomyslnie zwrocona!")
-        details[2] = "x"
+        details = books_dict[isbn].split("|")
 
-        new_details=""
+        if details[2] == "x":
+            print("Ksiazka nie jest wypozyczona!")
+        else:
+            print("Ksiazka zostala pomyslnie zwrocona!")
+            details[2] = "x"
 
-        for i in range(len(details)):
-            new_details = new_details+details[i]+"|"
+            new_details=""
 
-        del books_dict[isbn]
-        f = open("books.txt", "w", encoding='UTF-8')
-        for book in books_dict:
-            f.write(book + "; " + books_dict[book] + "\n")
-        f.write(isbn + "; " + new_details[:-1] + "\n")
-        f.close()
+            for i in range(len(details)):
+                new_details = new_details+details[i]+"|"
+
+            del books_dict[isbn]
+            f = open("books.txt", "w", encoding='UTF-8')
+            for book in books_dict:
+                f.write(book + "; " + books_dict[book] + "\n")
+            f.write(isbn + "; " + new_details[:-1] + "\n")
+            f.close()
+    except KeyError:
+        print("Numer ISBN " + isbn + " nie został znalezniony w bazie danych")
 
 
 def register():
