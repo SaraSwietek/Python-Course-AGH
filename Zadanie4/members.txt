@@ -1,0 +1,3 @@
+proba; probaa|b
+1swieta1; mojehaslo|c
+bibliotekarz1; haslo|b

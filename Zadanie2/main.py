@@ -44,7 +44,12 @@ class Graph():
     def get_neighbours(self, vertex):
         return self.graph[vertex]
 
-    def DFS(self, vertex, visited = [], stack = []):
+    def DFS(self, vertex, visited = None, stack = None):
+
+        if visited is None:
+            visited = []
+        if stack is None:
+            stack = []
 
         if vertex not in visited:
             visited.append(vertex)
@@ -67,7 +72,12 @@ class Graph():
                 visited.append(vertex)
             return iter(visited)
 
-    def BFS(self, vertex, visited = [], queue = []):
+    def BFS(self, vertex, visited = None, queue = None):
+
+        if visited is None:
+            visited = []
+        if queue is None:
+            queue = []
 
         if vertex not in visited:
             visited.append(vertex)
