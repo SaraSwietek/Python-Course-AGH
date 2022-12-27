@@ -31,11 +31,20 @@ class KNN:
     def train(self, vectors,
               labels):  # buduje bazę przypadków uczących (przyjmuje przynajmniej wektory i prawidłowe odpowiedzi)
 
-        for vector in vectors:
-            self.vectors_train.append(list(vector))
+        try:
+            for vector in vectors:
+                self.vectors_train.append(list(vector))
 
-        for label in labels:
-            self.labels_train.append(label)
+            for label in labels:
+                self.labels_train.append(label)
+
+            if len(self.labels_train) != len(self.vectors_train):
+                raise IndexError
+
+        except IndexError:
+            print("Dla przypadków uczących do każdego wektora musi zostać przypisana klasyfikacja i odwrotnie")
+            print("Sprawdź wymiary macierzy")
+            exit(1)
 
     def predict(self, vectors, method=euclidean_distance):  # =euclidean_distance):  # przyjmuje wektor (opcjonalnie: większą liczbę wektorów
         # naraz) i zwraca odpowiedź klasyfikatora
@@ -54,7 +63,6 @@ class KNN:
             distances.append(distances_vector)
 
         distances = np.array(distances)
-        print(distances)
 
         # szukanie klasyfikacji dla k najblizszych sasiadow
 
@@ -87,6 +95,6 @@ if __name__ == '__main__':
 
     knn_eucl = KNN(k=3)
     knn_eucl.train(vector_train, label_train)
-    print(knn_eucl.predict(sample,method=euclidean_distance))
+    print(knn_eucl.predict(sample, method=euclidean_distance))
 
 
