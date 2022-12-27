@@ -118,12 +118,9 @@ if __name__ == '__main__':
     knn_weights = KNN(k=6)
     knn_weights.train(vector_train_weights, label_train_weights)
 
-    prediction_euclidean = knn_weights.predict(vector_predict_weights, method=euclidean_distance)
-    prediction_taxicab = knn_weights.predict(vector_predict_weights, method=taxicab_distance)
-    prediction_maximum = knn_weights.predict(vector_predict_weights, method=maximum_distance)
-    prediction_cosine = knn_weights.predict(vector_predict_weights, method=cosine_distance)
+    methods = [euclidean_distance, taxicab_distance, maximum_distance, cosine_distance]
+    methods_str = ["euclidean distance", "taxicab distance", "maximum distance", "cosine distance"]
 
-    print("Accuracy, euklidean: ", accuracy(prediction_euclidean, label_predict_weights))
-    print("Accuracy, taxicab: ", accuracy(prediction_taxicab, label_predict_weights))
-    print("Accuracy, maximum: ", accuracy(prediction_maximum, label_predict_weights))
-    print("Accuracy, cosine: ", accuracy(prediction_cosine, label_predict_weights))
+    for i in range(len(methods)):
+        prediction = knn_weights.predict(vector_predict_weights, method=methods[i])
+        print("Accuracy, " + methods_str[i] + ": ", accuracy(prediction, label_predict_weights))
