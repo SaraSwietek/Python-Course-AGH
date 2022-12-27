@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
 from numpy.linalg import norm
+import pandas as pd
 
 
 def euclidean_distance(x1, x2):
@@ -20,6 +21,20 @@ def cosine_distance(x1, x2):
     cosine_similarity = np.dot(x1, x2) / (norm(x1) * norm(x2))
     return 1 - cosine_similarity  # the cosine similarity is greatest when the angle is the same: cos(0º) = 1,
     # so the neighbours with the greatest cosine similarity are the closest ones
+
+
+def accuracy(predicted_classification, actual_classification):
+    try:
+        if len(predicted_classification) != len(actual_classification):
+            raise IndexError
+
+        truefalse_arr = np.equal(predicted_classification, actual_classification)
+        accuracy = np.sum(truefalse_arr) / len(truefalse_arr)
+
+    except IndexError:
+        print("Podane macierze muszą być równe")
+
+    return accuracy
 
 
 class KNN:
@@ -46,7 +61,8 @@ class KNN:
             print("Sprawdź wymiary macierzy")
             exit(1)
 
-    def predict(self, vectors, method=euclidean_distance):  # =euclidean_distance):  # przyjmuje wektor (opcjonalnie: większą liczbę wektorów
+    def predict(self, vectors,
+                method=euclidean_distance):  # =euclidean_distance):  # przyjmuje wektor (opcjonalnie: większą liczbę wektorów
         # naraz) i zwraca odpowiedź klasyfikatora
 
         # dla wektora 1D (pojedynczy wektor) zmiana na 2D:
@@ -82,19 +98,32 @@ class KNN:
 
 
 if __name__ == '__main__':
-    vector_train = np.array([[2, 6], [3, 7], [4, 6], [7, 3], [8, 2], [9, 3]])
-    label_train = np.array(["red", "red", "red", "blue", "blue", "blue"])
-    x = vector_train[:, 0]
-    y = vector_train[:, 1]
+    # PRZYKLAD DZIALANIA NA WAGACH Z ZAJEC
 
-    #plt.figure()
-    #plt.scatter(x, y, c=label_train)
-    #plt.show()
+    df = pd.read_csv('weight.csv')
+    arr = df.to_numpy()
 
-    sample = np.array([[8, 4], [3, 5], [6, 4]])
+    # 20 przypadkow uczacych
 
-    knn_eucl = KNN(k=3)
-    knn_eucl.train(vector_train, label_train)
-    print(knn_eucl.predict(sample, method=euclidean_distance))
+    vector_train_weights = arr[0:20, :2]
+    label_train_weights = arr[0:20, 2]
 
+    # 10 przypadkow testowych
 
+    vector_predict_weights = arr[20:, :2]
+    label_predict_weights = arr[20:, 2]
+
+    # sprawdzam accuracy dla kazdej metody
+
+    knn_weights = KNN(k=6)
+    knn_weights.train(vector_train_weights, label_train_weights)
+
+    prediction_euclidean = knn_weights.predict(vector_predict_weights, method=euclidean_distance)
+    prediction_taxicab = knn_weights.predict(vector_predict_weights, method=taxicab_distance)
+    prediction_maximum = knn_weights.predict(vector_predict_weights, method=maximum_distance)
+    prediction_cosine = knn_weights.predict(vector_predict_weights, method=cosine_distance)
+
+    print("Accuracy, euklidean: ", accuracy(prediction_euclidean, label_predict_weights))
+    print("Accuracy, taxicab: ", accuracy(prediction_taxicab, label_predict_weights))
+    print("Accuracy, maximum: ", accuracy(prediction_maximum, label_predict_weights))
+    print("Accuracy, cosine: ", accuracy(prediction_cosine, label_predict_weights))
