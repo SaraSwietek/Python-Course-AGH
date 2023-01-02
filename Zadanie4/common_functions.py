@@ -60,10 +60,10 @@ def next_month():
     return date_after_month.strftime('%d.%m.%Y')
 
 
-def login():
+def login():  # funkcja łączy dialog z użytkownikiem z logiką biznesową
     username = input("Login: >> ")
     password = input("Password: >> ")
-    status = input("Czytelnik (c) czy bibliotekarz (b)?: >> ")
+    status = input("Czytelnik (c) czy bibliotekarz (b)?: >> ")  # czemu to nie jest menu?
 
     members_dict = txt_to_dict("members.txt")
 

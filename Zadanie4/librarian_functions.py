@@ -13,12 +13,12 @@ def return_book():
             print("Ksiazka nie jest wypozyczona!")
         else:
             print("Ksiazka zostala pomyslnie zwrocona!")
-            details[2] = "x"
+            details[2] = "x"  # ??
 
-            new_details=""
+            new_details=""  # ??
 
             for i in range(len(details)):
-                new_details = new_details+details[i]+"|"
+                new_details = new_details+details[i]+"|"  # "|".join(details)
 
             del books_dict[isbn]
             f = open("books.txt", "w", encoding='UTF-8')
@@ -34,7 +34,7 @@ def register():
 
     username = input("Podaj login: ")
     password = input("Podaj haslo: ")
-    status = input("Czytelnik (c) czy bibliotekarz (b)?: >> ")
+    status = input("Czytelnik (c) czy bibliotekarz (b)?: >> ")  # deja vu
 
     if status == "c" or status == "b":
         pass

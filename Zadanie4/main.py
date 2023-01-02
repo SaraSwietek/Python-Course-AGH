@@ -17,10 +17,10 @@ if __name__ == '__main__':
 
     #menu_type to lista [rodzaj uzytkownika, username]
     menu_type = menu({"Zaloguj się": (login, (), {}),
-                  "Wyjdz": (exit, (1,), {})})
+                  "Wyjdz": (exit, (0,), {})})
 
     # menu bibliotekarza
-    if menu_type[0] == "b":
+    if menu_type[0] == "b":  # czemu b?
 
         while True:
             main_menu_librarian = menu({"Przyjmij zwrot książki": (lf.return_book, (), {}),
