@@ -31,8 +31,8 @@ def accuracy(predicted_classification, actual_classification):
         truefalse_arr = np.equal(predicted_classification, actual_classification)
         accuracy = np.sum(truefalse_arr) / len(truefalse_arr)
 
-    except IndexError:
-        print("Podane macierze muszą być równe")
+    except IndexError:  # zamienił stryjek siekierkę na kijek - wyjątek jest lepszą sygnalizacją błędu niż print
+        print("Podane macierze muszą być równe")    # na pewno?
 
     return accuracy
 
@@ -40,7 +40,7 @@ def accuracy(predicted_classification, actual_classification):
 class KNN:
     def __init__(self, k=3):
         self.k = k
-        self.vectors_train = []
+        self.vectors_train = []  # lista?
         self.labels_train = []
 
     def train(self, vectors,
@@ -48,15 +48,14 @@ class KNN:
 
         try:
             for vector in vectors:
-                self.vectors_train.append(list(vector))
+                self.vectors_train.append(list(vector))  # list?
 
-            for label in labels:
-                self.labels_train.append(label)
+            self.labels_train.extend(labels)
 
             if len(self.labels_train) != len(self.vectors_train):
                 raise IndexError
 
-        except IndexError:
+        except IndexError:  # jw
             print("Dla przypadków uczących do każdego wektora musi zostać przypisana klasyfikacja i odwrotnie")
             print("Sprawdź wymiary macierzy")
             exit(1)
@@ -78,7 +77,7 @@ class KNN:
                 distances_vector.append(method(vector, v_train))
             distances.append(distances_vector)
 
-        distances = np.array(distances)
+        distances = np.array(distances)  # nie można było od razu stworzyć macierzy?
 
         # szukanie klasyfikacji dla k najblizszych sasiadow
 
@@ -91,14 +90,14 @@ class KNN:
 
         # wybor najczesciej wystepujacej klasy
         most_common = []
-        for _ in k_nearest_labels:
+        for _ in k_nearest_labels:  # podkreślnik sugeruje, że Pani nie potrzebuje tej wartości
             most_common.append(Counter(_).most_common(1)[0][0])
 
         return np.array(most_common)  # zwracam array z przyporzadkowanymi klasyfikacjami
 
 
 if __name__ == '__main__':
-    # PRZYKLAD DZIALANIA NA WAGACH Z ZAJEC
+    # PRZYKLAD DZIALANIA NA WAGACH Z ZAJEC  # tylko że te dane są słabe
 
     df = pd.read_csv('weight.csv')
     arr = df.to_numpy()
